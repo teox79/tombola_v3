@@ -37,12 +37,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-interface ITapp {
+interface ITappBar {
     handleDrawerToggle: () => void,
     open: boolean,
 }
 
-export const TAppBar: React.FC<ITapp> = (props) => {
+export const TAppBar: React.FC<ITappBar> = (props) => {
 
     const { handleDrawerToggle, open } = props;
 
