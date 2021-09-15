@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Deposits from './Deposits';
-import Orders from './Orders';
 import { Copyright } from './Copyright';
 import { TAppBar } from './TAppBar';
 import { TDrawer } from './TDrawer';
+import TSnackbar from './TSnackbar';
+import { useDispatch, useSelector } from "react-redux"
+import { SetTSnackbar } from './store/template.store';
+import { ITSnackbar } from 'interface/TSnackbar.interface';
+import { getITSnackbarSelector } from "./store/template.selector"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,23 +38,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export const Dashboard: React.FC = (props) => {
 
   const { children } = props;
+  const dispatch = useDispatch()
 
   const classes = useStyles();
   const [open, setOpen] = useState(true);
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  // leggo dallo state del template le informazioni del componente 
+  // <TSnackbar> 
+  const ITSnackbar = useSelector(getITSnackbarSelector)
+
+  useEffect(() => {
+    // test apertura <TSnackbar>
+    //dispatch(SetTSnackbar({ open: true, message: "prova" } as ITSnackbar))
+  }, [])
 
   return (
     <div className={classes.root}>
+      <TSnackbar
+        open={ITSnackbar.open}
+        message={ITSnackbar.message}
+        autoHideDuration={ITSnackbar.autoHideDuration}
+      />
       <CssBaseline />
       <TAppBar handleDrawerToggle={handleDrawerToggle} open={open} />
       <TDrawer handleDrawerToggle={handleDrawerToggle} open={open} />
