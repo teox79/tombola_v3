@@ -1,16 +1,16 @@
 import { Control, useForm } from "react-hook-form";
-import React from "react"
+import { ITombola, ITombolaForm } from '../../interface/tombola.interface'
+import React, { useEffect } from "react"
 
+import CustomTextArea from "../../components/form/CustomTextArea";
 import validationSchema from "../form/Validations";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ITombola, ITombolaForm } from '../../interface/tombola.interface'
-import CustomTextArea from "../../components/form/CustomTextArea";
 
 const TForm: React.FC<Partial<ITombolaForm>> = (props) => {
-    const { handleSubmitForm } = props;
+    const { handleSubmitForm, setForm, form = { isDirty: false, isValid: false } } = props;
 
     // https://react-hook-form.com/api/useform/
-    const { control, handleSubmit, formState } = useForm<ITombola>({
+    const { reset, control, handleSubmit, formState } = useForm<ITombola>({
         mode: "all",
         resolver: yupResolver(validationSchema),
         defaultValues: {
@@ -25,6 +25,16 @@ const TForm: React.FC<Partial<ITombolaForm>> = (props) => {
             handleSubmitForm(data);
         }
     }
+
+    useEffect(() => {
+        if (formState.isDirty !== form.isDirty ||
+            formState.isValid !== form.isValid) {
+            setForm({
+                isDirty: formState.isDirty,
+                isValid: formState.isValid
+            });
+        }
+    }, [formState]);
 
     return (
         <>

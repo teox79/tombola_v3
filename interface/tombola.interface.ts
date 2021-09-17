@@ -7,4 +7,11 @@ export interface ITombola {
 
 export interface ITombolaForm {
     handleSubmitForm?: (data: ITombola) => void,
+    setForm: any,
+    form: ITombolaFormState
+}
+
+export interface ITombolaFormState {
+    isDirty: boolean,
+    isValid: boolean,
 }
