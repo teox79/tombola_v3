@@ -8,9 +8,18 @@ import { TAppBar } from './TAppBar';
 import { TDrawer } from './TDrawer';
 import TSnackbar from './TSnackbar';
 import { useDispatch, useSelector } from "react-redux"
-import { SetTSnackbar } from './store/template.store';
-import { ITSnackbar } from 'interface/TSnackbar.interface';
-import { getITSnackbarSelector } from "./store/template.selector"
+import {
+  getITSnackbarSelector,
+  getLoaderSelector,
+  getAlertSelector
+} from "./store/template.selector"
+import { getTombola } from 'components/tombola/store/tombola.actions';
+import { getCartelle } from 'components/cartelle/store/cartelle.actions';
+import { setAlert } from './store/template.store';
+import Loader from './Loader';
+import TAlert from './TAlert';
+import { Color } from '@material-ui/lab';
+import { IAlert } from '../interface/alert.interface';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,14 +61,21 @@ export const Dashboard: React.FC = (props) => {
   // leggo dallo state del template le informazioni del componente 
   // <TSnackbar> 
   const ITSnackbar = useSelector(getITSnackbarSelector)
+  const ILoader = useSelector(getLoaderSelector)
+  const IAlert = useSelector(getAlertSelector)
 
   useEffect(() => {
     // test apertura <TSnackbar>
-    //dispatch(SetTSnackbar({ open: true, message: "prova" } as ITSnackbar))
+    //dispatch(setTSnackbar({ open: true, message: "prova" } as ITSnackbar))
+    dispatch(getTombola());
+    dispatch(getCartelle());
   }, [])
 
   return (
     <div className={classes.root}>
+      <Loader show={ILoader.show} progress={ILoader.progress}/>
+      <TAlert message={IAlert.message} open={IAlert.open} severity={IAlert.severity as Color}
+        showTime={3000} onClose={() => dispatch(setAlert({ open: false } as IAlert))} />
       <TSnackbar
         open={ITSnackbar.open}
         message={ITSnackbar.message}

@@ -41,6 +41,7 @@ const CustomTextArea: React.VFC<Props> = (props) => {
                         helperText={error ? error.message : null}
                         label={required ? `${label}*` : label}
                         disabled={disabled}
+                        value={field.value || ""}
                     />
                 )}
             />

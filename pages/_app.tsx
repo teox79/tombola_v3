@@ -12,9 +12,17 @@ import { ThunkAction, configureStore } from '@reduxjs/toolkit';
 
 import { TemplateStore } from '../template/store/template.store';
 import { Provider } from 'react-redux';
+import { TombolaStore } from 'components/tombola/store/tombola.store';
+import { CartelleStore } from 'components/cartelle/store/cartelle.store';
+
+
+import "../styles/globals.scss"
+import "../styles/Template.scss"
 
 const rootReducer = combineReducers({
+  cartelle: CartelleStore.reducer,
   template: TemplateStore.reducer,
+  tombola: TombolaStore.reducer,
 })
 export type RootState = ReturnType<typeof rootReducer>;
 

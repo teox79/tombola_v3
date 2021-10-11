@@ -3,7 +3,7 @@ import React from "react"
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from './listItems';
+import { ListItems } from './listItems';
 
 const drawerWidth = 240;
 
@@ -62,9 +62,9 @@ export const TDrawer: React.FC<ITDrawer> = (props) => {
                 </IconButton>
             </div>
             <Divider />
-            <List>{mainListItems}</List>
-            <Divider />
-            <List>{secondaryListItems}</List>
+            <List>
+                <ListItems />
+            </List>
         </Drawer>
     )
 }
